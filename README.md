@@ -44,11 +44,11 @@ DB_HOST=127.0.0.1
 
 DB_PORT=3306
 
-DB_DATABASE=nombre_de_tu_base_de_datos
+DB_DATABASE=agricultorapp
 
-DB_USERNAME=tu_usuario
+DB_USERNAME=root
 
-DB_PASSWORD=tu_contraseña
+DB_PASSWORD=
 
 7. **Ejecuta las migraciones para crear las tablas:**
 
