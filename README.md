@@ -54,9 +54,9 @@ DB_PASSWORD=
 
 php artisan migrate
 
-8. **debemos añadir datos a las tablas:**
+8. **(Opcional) Si deseas cargar datos de prueba, puedes ejecutar:**
 
-cliente, agricultors, terreno, temporada, categoría, producto
+php artisan db:seed
 
 9. **Inicia el servidor de desarrollo de Laravel:**
 
