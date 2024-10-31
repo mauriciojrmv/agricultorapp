@@ -172,3 +172,19 @@ POST /api/pedido-detalles: Crear un nuevo detalle de pedido.
 **Cuerpo de la Solicitud:**
 
 { "id_pedido": 1, "id_producto": 1, "cantidad": 2, "precio_unitario": 10.00 }
+
+### 8. Oferta
+
+GET /api/ofertas: Listar todas las ofertas.
+
+POST /api/ofertas: Crear una nueva oferta.
+
+**Cuerpo de la Solicitud:**
+
+{
+    "id_produccion": 1,      // ID de una producción válida
+    "id_agricultor": 1,      // ID de un agricultor válido
+    "precio_oferta": 150.0,  // Precio total de la oferta
+    "cantidad_oferta": 50    // Cantidad ofrecida en esta oferta
+}
+
