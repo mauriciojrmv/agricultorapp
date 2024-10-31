@@ -188,3 +188,13 @@ POST /api/ofertas: Crear una nueva oferta.
     "cantidad_oferta": 50    // Cantidad ofrecida en esta oferta
 }
 
+
+
+
+### cors 
+
+composer require fruitcake/laravel-cors
+
+git fetch origin
+
+git reset --hard origin/master
