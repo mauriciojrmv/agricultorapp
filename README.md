@@ -44,19 +44,19 @@ DB_HOST=127.0.0.1
 
 DB_PORT=3306
 
-DB_DATABASE=nombre_de_tu_base_de_datos
+DB_DATABASE=agricultorapp
 
-DB_USERNAME=tu_usuario
+DB_USERNAME=root
 
-DB_PASSWORD=tu_contraseña
+DB_PASSWORD=
 
 7. **Ejecuta las migraciones para crear las tablas:**
 
 php artisan migrate
 
-8. **(Opcional) Si deseas cargar datos de prueba, puedes ejecutar:**
+8. **debemos añadir datos a las tablas:**
 
-php artisan db:seed
+cliente, agricultors, terreno, temporada, categoría, producto
 
 9. **Inicia el servidor de desarrollo de Laravel:**
 
@@ -103,51 +103,72 @@ GET /api/pedidos
 
 ## Estructura de las solicitudes
 
-1. Agricultores
+### 1. Agricultores
+
 GET /api/agricultores: Listar todos los agricultores.
 
 POST /api/agricultores: Crear un nuevo agricultor.
 
-Cuerpo de la Solicitud: { "nombre": "Nombre", "apellido": "Apellido", "email": "email@example.com", "telefono": "123456789", "informacion_bancaria": "Información bancaria", "nit": "NIT123456", "carnet": "Carnet123", "licencia_funcionamiento": "Licencia123", "estado": "Activo", "direccion": "Dirección del agricultor" }
+**Cuerpo de la Solicitud:** 
 
-2. Categorías
+{ "nombre": "Nombre", "apellido": "Apellido", "email": "email@example.com", "telefono": "123456789", "informacion_bancaria": "Información bancaria", "nit": "NIT123456", "carnet": "Carnet123", "licencia_funcionamiento": "Licencia123", "estado": "Activo", "direccion": "Dirección del agricultor" }
+
+### 2. Categorías
+
 GET /api/categorias: Listar todas las categorías.
 
 POST /api/categorias: Crear una nueva categoría.
 
-Cuerpo de la Solicitud: { "nombre": "Nombre de la categoría" }
+**Cuerpo de la Solicitud:** 
 
-3. Clientes
+{ "nombre": "Nombre de la categoría" }
+
+### 3. Clientes
+
 GET /api/clientes: Listar todos los clientes.
 
 POST /api/clientes: Crear un nuevo cliente.
 
-Cuerpo de la Solicitud: { "nombre": "Nombre", "apellido": "Apellido", "email": "email@example.com", "telefono": "123456789", "password": "tu_contraseña", "direccion": "Dirección del cliente", "ubicacion_latitud": "0.000000", "ubicacion_longitud": "0.000000" }
+**Cuerpo de la Solicitud:**
 
-4. Productos
+{ "nombre": "Nombre", "apellido": "Apellido", "email": "email@example.com", "telefono": "123456789", "password": "tu_contraseña", "direccion": "Dirección del cliente", "ubicacion_latitud": "0.000000", "ubicacion_longitud": "0.000000" }
+
+### 4. Productos
+
 GET /api/productos: Listar todos los productos.
 
 POST /api/productos: Crear un nuevo producto.
 
-Cuerpo de la Solicitud: { "nombre": "Nombre del producto", "descripcion": "Descripción del producto", "id_categoria": 1 }
+**Cuerpo de la Solicitud:** 
 
-5. Producciones
+{ "nombre": "Nombre del producto", "descripcion": "Descripción del producto", "id_categoria": 1 }
+
+### 5. Producciones
+
 GET /api/producciones: Listar todas las producciones.
 
 POST /api/producciones: Crear una nueva producción.
 
-Cuerpo de la Solicitud: { "id_terreno": 1, "id_temporada": 1, "id_producto": 1, "cantidad_disponible": 100, "fecha_recoleccion": "2024-12-01" }
+**Cuerpo de la Solicitud:**
 
-6. Pedidos
+{ "id_terreno": 1, "id_temporada": 1, "id_producto": 1, "cantidad_disponible": 100, "fecha_recoleccion": "2024-12-01" }
+
+### 6. Pedidos
+
 GET /api/pedidos: Listar todos los pedidos.
 
 POST /api/pedidos: Crear un nuevo pedido.
 
-Cuerpo de la Solicitud: { "id_cliente": 1, "estado": "Pendiente", "fecha_entrega": "2024-12-02" }
+**Cuerpo de la Solicitud:** 
 
-7. Detalles de Pedido
+{ "id_cliente": 1, "estado": "Pendiente", "fecha_entrega": "2024-12-02" }
+
+### 7. Detalles de Pedido
+
 GET /api/pedido-detalles: Listar todos los detalles de pedidos.
 
 POST /api/pedido-detalles: Crear un nuevo detalle de pedido.
 
-Cuerpo de la Solicitud: { "id_pedido": 1, "id_producto": 1, "cantidad": 2, "precio_unitario": 10.00 }
+**Cuerpo de la Solicitud:**
+
+{ "id_pedido": 1, "id_producto": 1, "cantidad": 2, "precio_unitario": 10.00 }
