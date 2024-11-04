@@ -4,27 +4,31 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateProductosTable extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('productos', function (Blueprint $table) {
-            $table->id(); // Clave primaria para 'productos'
-            $table->foreignId('id_categoria')->constrained('categorias')->onDelete('cascade');
+            $table->id(); // Crea 'id' como BIGINT UNSIGNED
+            $table->foreignId('id_categoria')->constrained('categorias')->onDelete('cascade'); // Clave foránea a 'categorias'
             $table->string('nombre', 100);
             $table->text('descripcion')->nullable();
-            $table->timestamps();
+            $table->timestamps(); // Crea las columnas 'created_at' y 'updated_at'
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('productos');
     }
-};
+}

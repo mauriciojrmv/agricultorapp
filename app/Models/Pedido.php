@@ -9,17 +9,22 @@ class Pedido extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id_cliente', 'estado', 'fecha_entrega'];
+    // Definición de los campos que pueden ser asignados en masa
+    protected $fillable = [
+        'id_cliente',
+        'estado',
+        'fecha_entrega',
+    ];
+
+    // Relación con el modelo Cliente
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class, 'id_cliente');
+    }
 
     // Relación con PedidoDetalle
     public function detalles()
     {
         return $this->hasMany(PedidoDetalle::class, 'id_pedido');
-    }
-
-    // Relación con Cliente (un pedido pertenece a un cliente)
-    public function cliente()
-    {
-        return $this->belongsTo(Cliente::class, 'id_cliente');
     }
 }

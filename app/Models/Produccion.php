@@ -18,7 +18,9 @@ class Produccion extends Model
         'id_temporada',
         'id_producto',
         'cantidad_disponible',
-        'fecha_recoleccion'
+        'fecha_recoleccion',
+        'id_unidad_peso',
+        'cantidad_convertida_a_kg',
     ];
 
     // Relación con Terreno
@@ -39,7 +41,13 @@ class Produccion extends Model
         return $this->belongsTo(Producto::class, 'id_producto');
     }
 
-    // Relación con Oferta, una producción puede tener múltiples ofertas
+    // Relación con Unidad de Peso
+    public function unidadPeso()
+    {
+        return $this->belongsTo(UnidadPeso::class, 'id_unidad_peso');
+    }
+
+    // Relación con Oferta (una producción puede tener varias ofertas)
     public function ofertas()
     {
         return $this->hasMany(Oferta::class, 'id_produccion');

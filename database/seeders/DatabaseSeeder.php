@@ -15,6 +15,9 @@ class DatabaseSeeder extends Seeder
             ClienteSeeder::class,
             CategoriaSeeder::class,
             ProductoSeeder::class,
+            ConductoresTableSeeder::class,
+            UnidadesPesoTableSeeder::class,
+            CamionesTableSeeder::class,
             // Agrega otros seeders aquí si es necesario
         ]);
     }

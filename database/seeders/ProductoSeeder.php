@@ -9,22 +9,8 @@ class ProductoSeeder extends Seeder
 {
     public function run()
     {
-        Producto::create([
-            'nombre' => 'Manzana',
-            'descripcion' => 'Manzana roja fresca',
-            'id_categoria' => 1, // Frutas
-        ]);
-
-        Producto::create([
-            'nombre' => 'Zanahoria',
-            'descripcion' => 'Zanahoria fresca',
-            'id_categoria' => 2, // Verduras
-        ]);
-
-        Producto::create([
-            'nombre' => 'Arroz',
-            'descripcion' => 'Arroz de calidad',
-            'id_categoria' => 3, // Cereales
-        ]);
+        Producto::create(['id_categoria' => 1, 'nombre' => 'Manzana', 'descripcion' => 'Fruta fresca']);
+        Producto::create(['id_categoria' => 1, 'nombre' => 'Plátano', 'descripcion' => 'Fruta tropical']);
+        Producto::create(['id_categoria' => 2, 'nombre' => 'Zanahoria', 'descripcion' => 'Vegetal fresco']);
     }
 }

@@ -10,36 +10,36 @@ class ClienteSeeder extends Seeder
     public function run()
     {
         Cliente::create([
-            'nombre' => 'Juan',
-            'apellido' => 'Pérez',
-            'email' => 'juan.perez@example.com',
-            'telefono' => '123456789',
-            'password' => bcrypt('password123'), // Asegúrate de usar bcrypt para encriptar la contraseña
-            'direccion' => 'Calle Principal 123',
+            'nombre' => 'Ana',
+            'apellido' => 'Martínez',
+            'telefono' => '111222333',
+            'direccion' => 'Avenida 4',
             'ubicacion_latitud' => 12.345678,
-            'ubicacion_longitud' => -76.543210
+            'ubicacion_longitud' => -76.543210,
+            'email' => 'ana@example.com',
+            'password' => bcrypt('password'),
         ]);
 
         Cliente::create([
-            'nombre' => 'María',
-            'apellido' => 'Gómez',
-            'email' => 'maria.gomez@example.com',
-            'telefono' => '987654321',
-            'password' => bcrypt('securepass456'),
-            'direccion' => 'Av. Secundaria 456',
-            'ubicacion_latitud' => 12.987654,
-            'ubicacion_longitud' => -76.123456
+            'nombre' => 'Pedro',
+            'apellido' => 'Ramírez',
+            'telefono' => '444555666',
+            'direccion' => 'Avenida 5',
+            'ubicacion_latitud' => 12.456789,
+            'ubicacion_longitud' => -76.654321,
+            'email' => 'pedro@example.com',
+            'password' => bcrypt('password'),
         ]);
 
         Cliente::create([
-            'nombre' => 'Carlos',
-            'apellido' => 'López',
-            'email' => 'carlos.lopez@example.com',
-            'telefono' => '456123789',
-            'password' => bcrypt('mypassword789'),
-            'direccion' => 'Calle Tercera 789',
-            'ubicacion_latitud' => 13.654321,
-            'ubicacion_longitud' => -75.987654
+            'nombre' => 'Sofía',
+            'apellido' => 'Fernández',
+            'telefono' => '777888999',
+            'direccion' => 'Avenida 6',
+            'ubicacion_latitud' => 12.567890,
+            'ubicacion_longitud' => -76.765432,
+            'email' => 'sofia@example.com',
+            'password' => bcrypt('password'),
         ]);
     }
 }

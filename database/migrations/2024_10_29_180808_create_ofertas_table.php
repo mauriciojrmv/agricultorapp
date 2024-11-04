@@ -4,12 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateOfertasTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('ofertas', function (Blueprint $table) {
             $table->id(); // Crea 'id' como BIGINT UNSIGNED
@@ -17,15 +14,16 @@ return new class extends Migration
             $table->foreignId('id_agricultor')->constrained('agricultors')->onDelete('cascade');
             $table->decimal('precio_oferta', 10, 2);
             $table->decimal('cantidad_oferta', 10, 2);
+            $table->decimal('stock_fisico', 10, 2);
+            $table->decimal('stock_comprometido', 10, 2);
+            $table->foreignId('id_unidad_peso')->constrained('unidad_pesos')->onDelete('cascade');
+            $table->decimal('cantidad_convertida_a_kg', 10, 2);
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('ofertas');
     }
-};
+}

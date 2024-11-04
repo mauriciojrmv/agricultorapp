@@ -9,31 +9,8 @@ class TerrenoSeeder extends Seeder
 {
     public function run()
     {
-        Terreno::create([
-            'id_agricultor' => 1,
-            'descripcion' => 'Terreno de frutales',
-            'ubicacion_latitud' => '12.345678', // Agrega un valor para latitud
-            'ubicacion_longitud' => '-76.543210', // Agrega un valor para longitud
-            'area' => 500.00, // Agrega un valor para el área
-            'superficie_total' => 1000.00,
-        ]);
-
-        Terreno::create([
-            'id_agricultor' => 2,
-            'descripcion' => 'Terreno de hortalizas',
-            'ubicacion_latitud' => '11.234567', // Agrega un valor para latitud
-            'ubicacion_longitud' => '-75.123456', // Agrega un valor para longitud
-            'area' => 300.00, // Agrega un valor para el área
-            'superficie_total' => 1000.00,
-        ]);
-
-        Terreno::create([
-            'id_agricultor' => 3,
-            'descripcion' => 'Terreno de flores',
-            'ubicacion_latitud' => '10.123456', // Agrega un valor para latitud
-            'ubicacion_longitud' => '-74.654321', // Agrega un valor para longitud
-            'area' => 250.00, // Agrega un valor para el área
-            'superficie_total' => 1000.00,
-        ]);
+        Terreno::create(['id_agricultor' => 1, 'ubicacion_latitud' => 12.345678, 'ubicacion_longitud' => -76.543210, 'area' => 500, 'superficie_total' => 1000, 'descripcion' => 'Terreno de frutales']);
+        Terreno::create(['id_agricultor' => 1, 'ubicacion_latitud' => 12.456789, 'ubicacion_longitud' => -76.654321, 'area' => 600, 'superficie_total' => 1200, 'descripcion' => 'Terreno de hortalizas']);
+        Terreno::create(['id_agricultor' => 2, 'ubicacion_latitud' => 12.567890, 'ubicacion_longitud' => -76.765432, 'area' => 700, 'superficie_total' => 1400, 'descripcion' => 'Terreno de granos']);
     }
 }

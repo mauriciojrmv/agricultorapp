@@ -4,12 +4,14 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateTerrenosTable extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('terrenos', function (Blueprint $table) {
             $table->id(); // Crea 'id' como BIGINT UNSIGNED
@@ -19,15 +21,17 @@ return new class extends Migration
             $table->decimal('area', 10, 2);
             $table->decimal('superficie_total', 10, 2);
             $table->text('descripcion')->nullable();
-            $table->timestamps();
+            $table->timestamps(); // Crea las columnas 'created_at' y 'updated_at'
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('terrenos');
     }
-};
+}

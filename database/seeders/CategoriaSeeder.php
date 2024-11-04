@@ -9,16 +9,9 @@ class CategoriaSeeder extends Seeder
 {
     public function run()
     {
-        Categoria::create([
-            'nombre' => 'Frutas',
-        ]);
-
-        Categoria::create([
-            'nombre' => 'Verduras',
-        ]);
-
-        Categoria::create([
-            'nombre' => 'Cereales',
-        ]);
+        Categoria::create(['nombre' => 'Frutas']);
+        Categoria::create(['nombre' => 'Verduras']);
+        Categoria::create(['nombre' => 'Granos']);
     }
 }
+

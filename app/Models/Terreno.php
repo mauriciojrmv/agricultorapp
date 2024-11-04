@@ -29,4 +29,10 @@ class Terreno extends Model
     {
         return $this->hasMany(Produccion::class, 'id_terreno');
     }
+
+    // Relación con Puntos de Recogida: un terreno puede tener muchos puntos de recogida
+    public function puntoDeRecogida()
+    {
+        return $this->hasMany(PuntoDeRecogida::class, 'id_terreno');
+    }
 }
