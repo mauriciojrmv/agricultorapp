@@ -17,7 +17,7 @@ class CreatePedidosTable extends Migration
             $table->id(); // Define 'id' como BIGINT UNSIGNED
             $table->foreignId('id_cliente')->constrained('clientes')->onDelete('cascade'); // Relación con Cliente
             $table->string('estado', 50); // Estado del pedido
-            $table->date('fecha_entrega'); // Fecha de entrega
+            $table->date('fecha_entrega')->nullable(); // Fecha de entrega
             $table->timestamps(); // Crea las columnas 'created_at' y 'updated_at'
         });
     }

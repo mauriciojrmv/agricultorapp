@@ -16,13 +16,16 @@ class CategoriaController extends Controller
     // Crear una nueva categoría
     public function store(Request $request)
     {
-        $request->validate([
-            'nombre' => 'required|string|max:255',
-        ]);
+        try {
+            $request->validate([
+                'nombre' => 'required|string|max:255',
+            ]);
 
-        $categoria = Categoria::create($request->all());
-
-        return response()->json($categoria, 201);
+            $categoria = Categoria::create($request->all());
+            return response()->json($categoria, 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     // Mostrar una categoría específica
@@ -40,28 +43,38 @@ class CategoriaController extends Controller
     // Actualizar una categoría existente
     public function update(Request $request, $id)
     {
-        $categoria = Categoria::find($id);
+        try {
+            $categoria = Categoria::find($id);
 
-        if (!$categoria) {
-            return response()->json(['message' => 'Categoría no encontrada'], 404);
+            if (!$categoria) {
+                return response()->json(['message' => 'Categoría no encontrada'], 404);
+            }
+
+            $request->validate([
+                'nombre' => 'string|max:255',
+            ]);
+
+            $categoria->update($request->all());
+            return response()->json($categoria);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-
-        $categoria->update($request->all());
-
-        return response()->json($categoria);
     }
 
     // Eliminar una categoría
     public function destroy($id)
     {
-        $categoria = Categoria::find($id);
+        try {
+            $categoria = Categoria::find($id);
 
-        if (!$categoria) {
-            return response()->json(['message' => 'Categoría no encontrada'], 404);
+            if (!$categoria) {
+                return response()->json(['message' => 'Categoría no encontrada'], 404);
+            }
+
+            $categoria->delete();
+            return response()->json(['message' => 'Categoría eliminada']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-
-        $categoria->delete();
-
-        return response()->json(['message' => 'Categoría eliminada']);
     }
 }

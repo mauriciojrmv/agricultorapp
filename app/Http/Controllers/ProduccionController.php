@@ -10,7 +10,7 @@ class ProduccionController extends Controller
     // Listar todas las producciones
     public function index()
     {
-        return response()->json(Produccion::with(['terreno', 'temporada', 'producto'])->get());
+        return response()->json(Produccion::with(['terreno', 'temporada', 'producto', 'unidadPeso'])->get());
     }
 
     // Crear una nueva producción
@@ -22,6 +22,8 @@ class ProduccionController extends Controller
             'id_producto' => 'required|exists:productos,id',
             'cantidad_disponible' => 'required|numeric|min:0',
             'fecha_recoleccion' => 'required|date',
+            'id_unidad_peso' => 'nullable|exists:unidad_pesos,id', // Asegúrate de validar este campo si es opcional
+            'cantidad_convertida_a_kg' => 'nullable|numeric|min:0', // Validar si es necesario
         ]);
 
         $produccion = Produccion::create($request->all());
@@ -32,7 +34,7 @@ class ProduccionController extends Controller
     // Mostrar una producción específica
     public function show($id)
     {
-        $produccion = Produccion::with(['terreno', 'temporada', 'producto'])->find($id);
+        $produccion = Produccion::with(['terreno', 'temporada', 'producto', 'unidadPeso'])->find($id);
 
         if (!$produccion) {
             return response()->json(['message' => 'Producción no encontrada'], 404);
@@ -51,11 +53,13 @@ class ProduccionController extends Controller
         }
 
         $request->validate([
-            'id_terreno' => 'exists:terrenos,id',
-            'id_temporada' => 'exists:temporadas,id',
-            'id_producto' => 'exists:productos,id',
-            'cantidad_disponible' => 'numeric|min:0',
-            'fecha_recoleccion' => 'date',
+            'id_terreno' => 'nullable|exists:terrenos,id',
+            'id_temporada' => 'nullable|exists:temporadas,id',
+            'id_producto' => 'nullable|exists:productos,id',
+            'cantidad_disponible' => 'nullable|numeric|min:0',
+            'fecha_recoleccion' => 'nullable|date',
+            'id_unidad_peso' => 'nullable|exists:unidad_pesos,id',
+            'cantidad_convertida_a_kg' => 'nullable|numeric|min:0',
         ]);
 
         $produccion->update($request->all());

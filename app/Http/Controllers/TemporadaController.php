@@ -16,16 +16,20 @@ class TemporadaController extends Controller
     // Crear una nueva temporada
     public function store(Request $request)
     {
-        $request->validate([
-            'nombre' => 'required|string|max:255',
-            'descripcion' => 'nullable|string|max:500',
-            'fecha_inicio' => 'required|date',
-            'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
-        ]);
+        try {
+            $request->validate([
+                'nombre' => 'required|string|max:255',
+                'descripcion' => 'nullable|string|max:500',
+                'fecha_inicio' => 'required|date',
+                'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
+            ]);
 
-        $temporada = Temporada::create($request->all());
+            $temporada = Temporada::create($request->all());
 
-        return response()->json($temporada, 201);
+            return response()->json($temporada, 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     // Mostrar una temporada específica
@@ -43,35 +47,43 @@ class TemporadaController extends Controller
     // Actualizar una temporada existente
     public function update(Request $request, $id)
     {
-        $temporada = Temporada::find($id);
+        try {
+            $temporada = Temporada::find($id);
 
-        if (!$temporada) {
-            return response()->json(['message' => 'Temporada no encontrada'], 404);
+            if (!$temporada) {
+                return response()->json(['message' => 'Temporada no encontrada'], 404);
+            }
+
+            $request->validate([
+                'nombre' => 'string|max:255',
+                'descripcion' => 'nullable|string|max:500',
+                'fecha_inicio' => 'date',
+                'fecha_fin' => 'date|after_or_equal:fecha_inicio',
+            ]);
+
+            $temporada->update($request->all());
+
+            return response()->json($temporada);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-
-        $request->validate([
-            'nombre' => 'string|max:255',
-            'descripcion' => 'nullable|string|max:500',
-            'fecha_inicio' => 'date',
-            'fecha_fin' => 'date|after_or_equal:fecha_inicio',
-        ]);
-
-        $temporada->update($request->all());
-
-        return response()->json($temporada);
     }
 
     // Eliminar una temporada
     public function destroy($id)
     {
-        $temporada = Temporada::find($id);
+        try {
+            $temporada = Temporada::find($id);
 
-        if (!$temporada) {
-            return response()->json(['message' => 'Temporada no encontrada'], 404);
+            if (!$temporada) {
+                return response()->json(['message' => 'Temporada no encontrada'], 404);
+            }
+
+            $temporada->delete();
+
+            return response()->json(['message' => 'Temporada eliminada']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-
-        $temporada->delete();
-
-        return response()->json(['message' => 'Temporada eliminada']);
     }
 }

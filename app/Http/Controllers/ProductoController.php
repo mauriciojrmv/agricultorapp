@@ -10,14 +10,14 @@ class ProductoController extends Controller
     // Listar todos los productos
     public function index()
     {
-        return response()->json(Producto::all());
+        return response()->json(Producto::with(['categoria', 'producciones', 'ofertaDetalles', 'pedidoDetalles'])->get());
     }
 
     // Crear un nuevo producto
     public function store(Request $request)
     {
         $request->validate([
-            'id_categoria' => 'required|integer|exists:categorias,id',
+            'id_categoria' => 'required|exists:categorias,id',
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string|max:500',
         ]);
@@ -30,7 +30,7 @@ class ProductoController extends Controller
     // Mostrar un producto específico
     public function show($id)
     {
-        $producto = Producto::find($id);
+        $producto = Producto::with(['categoria', 'producciones', 'ofertaDetalles', 'pedidoDetalles'])->find($id);
 
         if (!$producto) {
             return response()->json(['message' => 'Producto no encontrado'], 404);
@@ -49,8 +49,8 @@ class ProductoController extends Controller
         }
 
         $request->validate([
-            'id_categoria' => 'integer|exists:categorias,id',
-            'nombre' => 'string|max:255',
+            'id_categoria' => 'nullable|exists:categorias,id',
+            'nombre' => 'nullable|string|max:255',
             'descripcion' => 'nullable|string|max:500',
         ]);
 

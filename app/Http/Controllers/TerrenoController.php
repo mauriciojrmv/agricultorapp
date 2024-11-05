@@ -18,12 +18,21 @@ class TerrenoController extends Controller
     {
         $request->validate([
             'id_agricultor' => 'required|integer|exists:agricultors,id',
-            'descripcion' => 'required|string|max:255',
-            'ubicacion' => 'required|string|max:500',
-            'area' => 'required|numeric|min:0'
+            'ubicacion_latitud' => 'required|numeric',
+            'ubicacion_longitud' => 'required|numeric',
+            'area' => 'required|numeric|min:0',
+            'superficie_total' => 'required|numeric|min:0',
+            'descripcion' => 'nullable|string|max:255',
         ]);
 
-        $terreno = Terreno::create($request->all());
+        $terreno = Terreno::create([
+            'id_agricultor' => $request->id_agricultor,
+            'ubicacion_latitud' => $request->ubicacion_latitud,
+            'ubicacion_longitud' => $request->ubicacion_longitud,
+            'area' => $request->area,
+            'superficie_total' => $request->superficie_total,
+            'descripcion' => $request->descripcion,
+        ]);
 
         return response()->json($terreno, 201);
     }
@@ -51,12 +60,21 @@ class TerrenoController extends Controller
 
         $request->validate([
             'id_agricultor' => 'integer|exists:agricultors,id',
-            'descripcion' => 'string|max:255',
-            'ubicacion' => 'string|max:500',
-            'area' => 'numeric|min:0'
+            'ubicacion_latitud' => 'numeric',
+            'ubicacion_longitud' => 'numeric',
+            'area' => 'numeric|min:0',
+            'superficie_total' => 'numeric|min:0',
+            'descripcion' => 'nullable|string|max:255',
         ]);
 
-        $terreno->update($request->all());
+        $terreno->update($request->only([
+            'id_agricultor',
+            'ubicacion_latitud',
+            'ubicacion_longitud',
+            'area',
+            'superficie_total',
+            'descripcion',
+        ]));
 
         return response()->json($terreno);
     }

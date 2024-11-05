@@ -12,6 +12,7 @@ use App\Http\Controllers\OfertaController;
 use App\Http\Controllers\OfertaDetalleController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\PedidoDetalleController;
+use App\Http\Controllers\UnidadPesoController;
 use Illuminate\Http\Request;
 
 // Definimos todas las rutas CRUD para el controlador de producciones
@@ -23,9 +24,10 @@ Route::apiResource('productos', ProductoController::class);
 Route::apiResource('terrenos', TerrenoController::class);
 Route::apiResource('producciones', ProduccionController::class);
 Route::apiResource('ofertas', OfertaController::class);
-Route::apiResource('oferta-detalles', OfertaDetalleController::class);
+Route::apiResource('oferta_detalles', OfertaDetalleController::class);
 Route::apiResource('pedidos', PedidoController::class);
-Route::apiResource('pedido-detalles', PedidoDetalleController::class);
+Route::apiResource('pedido_detalles', PedidoDetalleController::class);
+Route::apiResource('unidades_peso', UnidadPesoController::class);
 
 // Ruta de prueba para obtener el usuario autenticado (opcional)
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

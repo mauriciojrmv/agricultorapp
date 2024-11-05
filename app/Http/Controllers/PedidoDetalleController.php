@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 
 class PedidoDetalleController extends Controller
 {
-    // Listar todos los detalles de pedidos
+    // Listar todos los detalles de los pedidos
     public function index()
     {
-        return response()->json(PedidoDetalle::with('pedido', 'producto')->get());
+        return response()->json(PedidoDetalle::with(['pedido', 'producto', 'unidadPeso'])->get());
     }
 
     // Crear un nuevo detalle de pedido
@@ -19,18 +19,21 @@ class PedidoDetalleController extends Controller
         $request->validate([
             'id_pedido' => 'required|integer|exists:pedidos,id',
             'id_producto' => 'required|integer|exists:productos,id',
-            'cantidad' => 'required|integer|min:1',
-            'precio_unitario' => 'required|numeric',
+            'cantidad' => 'required|numeric|min:1',
+            'id_unidad_peso' => 'required|integer|exists:unidad_pesos,id',
+            'cantidad_convertida_a_kg' => 'required|numeric|min:0',
+            'precio_unitario' => 'required|numeric|min:0',
         ]);
 
         $detalle = PedidoDetalle::create($request->all());
+
         return response()->json($detalle, 201);
     }
 
     // Mostrar un detalle de pedido específico
     public function show($id)
     {
-        $detalle = PedidoDetalle::with('pedido', 'producto')->find($id);
+        $detalle = PedidoDetalle::with(['pedido', 'producto', 'unidadPeso'])->find($id);
 
         if (!$detalle) {
             return response()->json(['message' => 'Detalle de pedido no encontrado'], 404);
@@ -48,7 +51,17 @@ class PedidoDetalleController extends Controller
             return response()->json(['message' => 'Detalle de pedido no encontrado'], 404);
         }
 
+        $request->validate([
+            'id_pedido' => 'integer|exists:pedidos,id',
+            'id_producto' => 'integer|exists:productos,id',
+            'cantidad' => 'numeric|min:1',
+            'id_unidad_peso' => 'integer|exists:unidad_pesos,id',
+            'cantidad_convertida_a_kg' => 'numeric|min:0',
+            'precio_unitario' => 'numeric|min:0',
+        ]);
+
         $detalle->update($request->all());
+
         return response()->json($detalle);
     }
 
@@ -62,6 +75,7 @@ class PedidoDetalleController extends Controller
         }
 
         $detalle->delete();
+
         return response()->json(['message' => 'Detalle de pedido eliminado']);
     }
 }

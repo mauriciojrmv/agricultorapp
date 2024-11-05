@@ -9,6 +9,8 @@ class UnidadPeso extends Model
 {
     use HasFactory;
 
+    protected $table = 'unidad_pesos';
+
     protected $fillable = [
         'nombre',
         'factor_conversion_a_kg'
