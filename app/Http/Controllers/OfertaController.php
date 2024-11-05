@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Oferta;
 use App\Models\OfertaDetalle;
 use App\Models\Produccion;
-use app\Models\UnidadPeso;
+use App\Models\UnidadPeso; // Asegúrate de que este import sea correcto
 use Illuminate\Http\Request;
 
 class OfertaController extends Controller
@@ -16,25 +16,25 @@ class OfertaController extends Controller
         return response()->json(Oferta::with('detalles')->get());
     }
 
-// Crear una nueva oferta
-public function store(Request $request)
-{
-    $request->validate([
-        'id_produccion' => 'required|integer|exists:produccions,id',
-        'id_agricultor' => 'required|integer|exists:agricultors,id',
-        'precio_oferta' => 'required|numeric|min:0',
-        'cantidad_oferta' => 'required|numeric|min:0',
-        'id_unidad_peso' => 'required|integer|exists:unidad_pesos,id',
-    ]);
+    // Crear una nueva oferta
+    public function store(Request $request)
+    {
+        $request->validate([
+            'id_produccion' => 'required|integer|exists:produccions,id',
+            'id_agricultor' => 'required|integer|exists:agricultors,id',
+            'precio_oferta' => 'required|numeric|min:0',
+            'cantidad_oferta' => 'required|numeric|min:0',
+            'id_unidad_peso' => 'required|integer|exists:unidad_pesos,id',
+        ]);
 
-    // Obtener la producción relacionada
-    $produccion = Produccion::findOrFail($request->id_produccion);
+        // Obtener la producción relacionada
+        $produccion = Produccion::findOrFail($request->id_produccion);
 
-    // Calcular cantidad convertida a kg
-    $unidad_peso = UnidadPeso::find($request->id_unidad_peso);
-    $cantidad_convertida_a_kg = $request->cantidad_oferta * $unidad_peso->factor_conversion_a_kg;
+        // Calcular cantidad convertida a kg
+        $unidad_peso = UnidadPeso::find($request->id_unidad_peso);
+        $cantidad_convertida_a_kg = $request->cantidad_oferta * $unidad_peso->factor_conversion_a_kg;
 
-    // Crear la oferta
+        // Crear la oferta
     $oferta = Oferta::create([
         'id_produccion' => $request->id_produccion,
         'id_agricultor' => $request->id_agricultor,
@@ -45,6 +45,9 @@ public function store(Request $request)
         'id_unidad_peso' => $request->id_unidad_peso,
         'cantidad_convertida_a_kg' => $cantidad_convertida_a_kg,
     ]);
+
+    // Reducir cantidad en producción
+$produccion->decrement('cantidad_disponible', $request->cantidad_oferta);
 
     // Crear el detalle de oferta
     OfertaDetalle::create([
