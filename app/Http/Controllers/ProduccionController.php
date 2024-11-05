@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produccion;
+use App\Models\UnidadPeso;
 use Illuminate\Http\Request;
 
 class ProduccionController extends Controller
@@ -22,11 +23,23 @@ class ProduccionController extends Controller
             'id_producto' => 'required|exists:productos,id',
             'cantidad_disponible' => 'required|numeric|min:0',
             'fecha_recoleccion' => 'required|date',
-            'id_unidad_peso' => 'nullable|exists:unidad_pesos,id', // Asegúrate de validar este campo si es opcional
-            'cantidad_convertida_a_kg' => 'nullable|numeric|min:0', // Validar si es necesario
+            'id_unidad_peso' => 'nullable|exists:unidad_pesos,id',
         ]);
 
-        $produccion = Produccion::create($request->all());
+        // Obtener el factor de conversión
+        $unidadPeso = UnidadPeso::find($request->id_unidad_peso);
+        $cantidad_convertida_a_kg = $request->cantidad_disponible * ($unidadPeso ? $unidadPeso->factor_conversion_a_kg : 1);
+
+        // Crear la producción
+        $produccion = Produccion::create([
+            'id_terreno' => $request->id_terreno,
+            'id_temporada' => $request->id_temporada,
+            'id_producto' => $request->id_producto,
+            'cantidad_disponible' => $request->cantidad_disponible,
+            'fecha_recoleccion' => $request->fecha_recoleccion,
+            'id_unidad_peso' => $request->id_unidad_peso,
+            'cantidad_convertida_a_kg' => $cantidad_convertida_a_kg, // Guardar cantidad convertida a kg
+        ]);
 
         return response()->json($produccion, 201);
     }
@@ -59,10 +72,22 @@ class ProduccionController extends Controller
             'cantidad_disponible' => 'nullable|numeric|min:0',
             'fecha_recoleccion' => 'nullable|date',
             'id_unidad_peso' => 'nullable|exists:unidad_pesos,id',
-            'cantidad_convertida_a_kg' => 'nullable|numeric|min:0',
         ]);
 
-        $produccion->update($request->all());
+        // Obtener el factor de conversión
+        $unidadPeso = UnidadPeso::find($request->id_unidad_peso);
+        $cantidad_convertida_a_kg = $request->cantidad_disponible * ($unidadPeso ? $unidadPeso->factor_conversion_a_kg : 1);
+
+        // Actualizar los campos necesarios
+        $produccion->update([
+            'id_terreno' => $request->id_terreno,
+            'id_temporada' => $request->id_temporada,
+            'id_producto' => $request->id_producto,
+            'cantidad_disponible' => $request->cantidad_disponible,
+            'fecha_recoleccion' => $request->fecha_recoleccion,
+            'id_unidad_peso' => $request->id_unidad_peso,
+            'cantidad_convertida_a_kg' => $cantidad_convertida_a_kg, // Actualizar cantidad convertida a kg
+        ]);
 
         return response()->json($produccion);
     }
@@ -81,3 +106,4 @@ class ProduccionController extends Controller
         return response()->json(['message' => 'Producción eliminada']);
     }
 }
+
