@@ -35,8 +35,8 @@ class ClienteController extends Controller
                 'telefono' => $request->telefono,
                 'password' => bcrypt($request->password),
                 'direccion' => $request->direccion,
-                'ubicacion_latitud' => $request->ubicacion_latitud,
-                'ubicacion_longitud' => $request->ubicacion_longitud,
+                'ubicacion_latitud' => $request->ubicacion_latitud ?? null,
+            'ubicacion_longitud' => $request->ubicacion_longitud ?? null,
             ]);
 
             return response()->json($cliente, 201);
